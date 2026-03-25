@@ -170,6 +170,19 @@ function JobCard({ job, onStatusChange, onEdit, onDelete, onAI, aiOpen, aiMode, 
   );
 }
 
+function Track({label, color, jobs: tj, cp, aiPanel}) {
+  if(!tj.length) return null;
+  return (<>
+    <div style={{ display:"flex", alignItems:"center", gap:14, margin:"28px 0 14px" }}>
+      <div style={{ flex:1, height:1, background:"rgba(130,130,160,0.12)" }} />
+      <span style={{ fontSize:11, fontWeight:700, color, whiteSpace:"nowrap", letterSpacing:"0.05em", textTransform:"uppercase" }}>{label}</span>
+      <span style={{ fontSize:11, color:"#9CA3AF", fontWeight:600, background:"rgba(130,130,160,0.08)", padding:"2px 8px", borderRadius:10 }}>{tj.length}</span>
+      <div style={{ flex:1, height:1, background:"rgba(130,130,160,0.12)" }} />
+    </div>
+    {tj.map(job=><JobCard key={job.id} job={job} {...cp} aiOpen={aiPanel?.id===job.id} />)}
+  </>);
+}
+
 export default function App() {
   const [jobs, setJobs] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -249,18 +262,6 @@ export default function App() {
     editingNotes, setEditingNotes, saveNotes,
   };
 
-  const Track = ({label,color,jobs:tj}) => {
-    if(!tj.length) return null;
-    return (<>
-      <div style={{ display:"flex", alignItems:"center", gap:14, margin:"28px 0 14px" }}>
-        <div style={{ flex:1, height:1, background:"rgba(130,130,160,0.12)" }} />
-        <span style={{ fontSize:11, fontWeight:700, color, whiteSpace:"nowrap", letterSpacing:"0.05em", textTransform:"uppercase" }}>{label}</span>
-        <span style={{ fontSize:11, color:"#9CA3AF", fontWeight:600, background:"rgba(130,130,160,0.08)", padding:"2px 8px", borderRadius:10 }}>{tj.length}</span>
-        <div style={{ flex:1, height:1, background:"rgba(130,130,160,0.12)" }} />
-      </div>
-      {tj.map(job=><JobCard key={job.id} job={job} {...cp} aiOpen={aiPanel?.id===job.id} />)}
-    </>);
-  };
 
   return (
     <div style={{ fontFamily:"'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif", minHeight:"100vh", background:"linear-gradient(145deg,#f0f4f8 0%,#e8edf5 40%,#f5f0eb 100%)", backgroundAttachment:"fixed" }}>
@@ -297,9 +298,9 @@ export default function App() {
           ))}
         </div>
 
-        <Track label="Fast Track — High Opportunity" color="#065F46" jobs={fastTrack} />
-        <Track label="Tech Sales — SDR/BDR (RepVue Vetted)" color="#4338CA" jobs={techSales} />
-        <Track label="WFH Now — Remote, Hiring Fast" color="#9A3412" jobs={wfhNow} />
+        <Track label="Fast Track — High Opportunity" color="#065F46" jobs={fastTrack} cp={cp} aiPanel={aiPanel} />
+        <Track label="Tech Sales — SDR/BDR (RepVue Vetted)" color="#4338CA" jobs={techSales} cp={cp} aiPanel={aiPanel} />
+        <Track label="WFH Now — Remote, Hiring Fast" color="#9A3412" jobs={wfhNow} cp={cp} aiPanel={aiPanel} />
 
         {!fastTrack.length && !techSales.length && !wfhNow.length && (
           <div style={{ textAlign:"center", padding:"60px 0", color:"#9CA3AF" }}>No roles match that filter.</div>
