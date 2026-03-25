@@ -91,7 +91,8 @@ const IS = () => ({
   color: "#1a2744", boxSizing: "border-box", outline: "none", fontFamily: "inherit",
 });
 
-function JobCard({ job, onStatusChange, onEdit, onDelete, onAI, aiOpen, aiMode, setAiMode, aiResult, setAiResult, jdInput, setJdInput, aiLoading, runAI, editingNotes, setEditingNotes, notesVal, setNotesVal, saveNotes }) {
+function JobCard({ job, onStatusChange, onEdit, onDelete, onAI, aiOpen, aiMode, setAiMode, aiResult, setAiResult, jdInput, setJdInput, aiLoading, runAI, editingNotes, setEditingNotes, saveNotes }) {
+  const [localNotes, setLocalNotes] = useState("");
   return (
     <div style={{
       background: "rgba(255,255,255,0.6)", backdropFilter: "blur(16px)",
@@ -135,16 +136,16 @@ function JobCard({ job, onStatusChange, onEdit, onDelete, onAI, aiOpen, aiMode, 
       <div style={{ marginTop:12, paddingTop:10, borderTop:"1px solid rgba(130,130,160,0.08)" }}>
         {editingNotes===job.id ? (
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-            <textarea value={notesVal} onChange={e=>setNotesVal(e.target.value)} rows={3} style={{ ...IS(), resize:"vertical", fontSize:13 }} placeholder="Add notes..." />
+            <textarea value={localNotes} onChange={e=>setLocalNotes(e.target.value)} rows={3} style={{ ...IS(), resize:"vertical", fontSize:13 }} placeholder="Add notes..." />
             <div style={{ display:"flex", gap:6 }}>
-              <Btn onClick={()=>saveNotes(job.id)}>Save</Btn>
+              <Btn onClick={()=>saveNotes(job.id, localNotes)}>Save</Btn>
               <Btn onClick={()=>setEditingNotes(null)}>Cancel</Btn>
             </div>
           </div>
         ) : (
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:8 }}>
             <p style={{ margin:0, fontSize:13, color:job.notes?"#4B5563":"#D1D5DB", fontStyle:job.notes?"normal":"italic" }}>{job.notes||"No notes yet"}</p>
-            <Btn onClick={()=>{setEditingNotes(job.id);setNotesVal(job.notes||"");}} style={{ flexShrink:0 }}>{job.notes?"Edit":"Add note"}</Btn>
+            <Btn onClick={()=>{setEditingNotes(job.id);setLocalNotes(job.notes||"");}} style={{ flexShrink:0 }}>{job.notes?"Edit":"Add note"}</Btn>
           </div>
         )}
       </div>
@@ -180,7 +181,6 @@ export default function App() {
   const [aiLoading, setAiLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState("All");
   const [editingNotes, setEditingNotes] = useState(null);
-  const [notesVal, setNotesVal] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -208,7 +208,7 @@ export default function App() {
 
   const deleteJob = async (id) => { await save(jobs.filter(j=>j.id!==id)); if(aiPanel?.id===id)setAiPanel(null); };
   const updateStatus = async (id, status) => save(jobs.map(j=>j.id===id?{...j,status}:j));
-  const saveNotes = async (id) => { await save(jobs.map(j=>j.id===id?{...j,notes:notesVal}:j)); setEditingNotes(null); };
+  const saveNotes = async (id, notes) => { await save(jobs.map(j=>j.id===id?{...j,notes}:j)); setEditingNotes(null); };
 
   const runAI = async (job) => {
     setAiLoading(true); setAiResult("");
@@ -246,7 +246,7 @@ export default function App() {
     onStatusChange:updateStatus, onEdit:openForm, onDelete:deleteJob,
     onAI:(job)=>{setAiPanel(aiPanel?.id===job.id?null:job);setAiResult("");setJdInput("");},
     aiMode, setAiMode, aiResult, setAiResult, jdInput, setJdInput, aiLoading, runAI,
-    editingNotes, setEditingNotes, notesVal, setNotesVal, saveNotes,
+    editingNotes, setEditingNotes, saveNotes,
   };
 
   const Track = ({label,color,jobs:tj}) => {
