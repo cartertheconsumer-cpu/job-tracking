@@ -65,7 +65,7 @@ function OverdueDot({ followUp }) {
 
 function Btn({ children, onClick, active, danger, disabled, style: s }) {
   return (
-    <button onClick={onClick} disabled={disabled} style={{
+    <button type="button" onClick={onClick} disabled={disabled} style={{
       fontSize: 12, padding: "5px 12px", cursor: disabled ? "default" : "pointer",
       borderRadius: 8, border: "1px solid rgba(130,130,160,0.18)",
       background: active ? "#1a2744" : danger ? "#FEE2E2" : "rgba(255,255,255,0.75)",
