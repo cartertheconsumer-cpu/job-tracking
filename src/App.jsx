@@ -184,17 +184,15 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    (async () => {
-      try {
-        const r = await window.storage.get("jst_jobs_v4");
-        if (r?.value) { setJobs(JSON.parse(r.value)); }
-        else { setJobs(INITIAL_JOBS); await window.storage.set("jst_jobs_v4", JSON.stringify(INITIAL_JOBS)); }
-      } catch { setJobs(INITIAL_JOBS); }
-      setLoaded(true);
-    })();
+    try {
+      const saved = localStorage.getItem("jst_jobs_v4");
+      if (saved) { setJobs(JSON.parse(saved)); }
+      else { setJobs(INITIAL_JOBS); localStorage.setItem("jst_jobs_v4", JSON.stringify(INITIAL_JOBS)); }
+    } catch { setJobs(INITIAL_JOBS); }
+    setLoaded(true);
   }, []);
 
-  const save = async (updated) => { setJobs(updated); try { await window.storage.set("jst_jobs_v4", JSON.stringify(updated)); } catch {} };
+  const save = (updated) => { setJobs(updated); try { localStorage.setItem("jst_jobs_v4", JSON.stringify(updated)); } catch {} };
 
   const openForm = (job) => {
     if (job && job.id) setForm({ ...job });
