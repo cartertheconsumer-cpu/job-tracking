@@ -52,6 +52,10 @@ const INITIAL_JOBS = [
   { id:35, track:"WFH Now", company:"NTT DATA", role:"Customer Care Associate", url:"https://www.nttdata.com/global/en/careers", location:"Detroit, MI (Remote)", mode:"Remote", pay:"$20/hr", commute:"Remote", repvue:"", summary:"Global IT services company. Remote customer care role based in Detroit metro. $20/hr. Better resume line than generic call center — NTT DATA is a recognized global tech brand.", dateApplied:"", followUp:"", status:"Watchlist", notes:"$20/hr remote. Global IT services company — good brand on resume while pursuing tech sales." },
   { id:36, track:"WFH Now", company:"CVS / Aetna", role:"Customer Service Rep – Behavioral Health", url:"https://jobs.cvshealth.com/", location:"Remote", mode:"Remote", pay:"Competitive hourly + benefits", commute:"Remote", repvue:"", summary:"Remote customer service for behavioral health division. Monday–Friday schedule. Healthcare is stable, CVS/Aetna is a major employer with benefits from day one. Clear M-F hours, no weekends.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Mon–Fri 11am–7:30pm EST. No weekends. Stable healthcare employer with immediate benefits." },
   { id:37, track:"WFH Now", company:"Concentrix", role:"Customer Service / Tech Support – Tech Products (Remote)", url:"https://jobs.concentrix.com/job-search/", location:"Remote (MI eligible)", mode:"Remote", pay:"~$16–$20/hr", commute:"Remote", repvue:"", summary:"Tech product support from home — troubleshoot and assist customers with technology products via phone and chat. Equipment provided, paid training. More interesting than financial services track if you prefer tech.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Tech-focused version of Concentrix role. Apply to multiple Concentrix listings to increase odds." },
+  { id:38, track:"Tech Sales", company:"BuildingLink", role:"Sales Development Representative", url:"https://builtin.com/job/us-remote-sales-development-representative-sdr/2371199", location:"Remote (US)", mode:"Remote", pay:"$60K base / $80K OTE · Flexible PTO", commute:"Remote", repvue:"", summary:"Entry-level SDR role at a property management SaaS company. Cold calling, email, and personalized video outreach. BuildingLink provides full training and a clear path to Account Executive. Fully remote-first with flexible PTO.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Entry-level friendly — they explicitly mention training and mentorship. Good stepping stone to AE." },
+  { id:39, track:"Tech Sales", company:"Polestar", role:"Customer Experience Advisor", url:"https://about.polestar.com/careers/jobs/", location:"Remote (contract)", mode:"Remote", pay:"Competitive hourly · Contract-to-hire", commute:"Remote", repvue:"", summary:"Remote customer experience role for the Polestar EV brand — own the customer journey via phone, email, and chat. Brand ambassador role with potential conversion to full-time. Automotive CX meets EV — perfect overlap with your Fast Track targets.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Contract-to-hire. Strong overlap with your EV track. Polestar is premium brand — great resume line. Check about.polestar.com/careers for current openings." },
+  { id:40, track:"Fast Track", company:"Electrify America", role:"Customer Support Representative", url:"https://www.electrifyamerica.com/careers/", location:"Remote", mode:"Remote", pay:"$26–$45/hr est.", commute:"Remote", repvue:"", summary:"America's largest public EV charging network — remote customer support via phone, chat, and SMS helping EV drivers with charging issues. Operated via Agero partnership. Strong EV brand, fully remote, directly tied to the EV ecosystem you're targeting.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Check electrifyamerica.com/careers and Agero careers for active postings. EV-specific brand — excellent alongside Rivian/Tesla applications." },
+  { id:41, track:"Tech Sales", company:"Rippling", role:"Sales Development Representative (Outbound)", url:"https://ats.rippling.com/rippling/jobs/1a4b7784-718d-4180-9f71-5f6c07c469a1", location:"Remote (US)", mode:"Remote", pay:"$69K–$99K OTE est.", commute:"Remote", repvue:"", summary:"Outbound SDR at one of the fastest-growing HR/IT/Finance SaaS platforms. Prospect and qualify new customers and channel partners. High-velocity top-of-funnel role with strong upside. Rippling is a unicorn-status company with rapid growth.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Competitive role at a top-tier SaaS company. Your consultative mortgage background is a strong angle for HR/payroll product selling." },
 ];
 
 function Badge({ label, colors }) {
@@ -165,8 +169,18 @@ export default function App() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem("jst_jobs_v2");
-      if (saved) { setJobs(JSON.parse(saved)); }
-      else { setJobs(INITIAL_JOBS); localStorage.setItem("jst_jobs_v2", JSON.stringify(INITIAL_JOBS)); }
+      const deletedIds = new Set(JSON.parse(localStorage.getItem("jst_deleted_ids") || "[]"));
+      if (saved) {
+        const savedJobs = JSON.parse(saved);
+        const savedIds = new Set(savedJobs.map(j => j.id));
+        const newJobs = INITIAL_JOBS.filter(j => !savedIds.has(j.id) && !deletedIds.has(j.id));
+        const merged = [...savedJobs, ...newJobs];
+        setJobs(merged);
+        if (newJobs.length > 0) localStorage.setItem("jst_jobs_v2", JSON.stringify(merged));
+      } else {
+        setJobs(INITIAL_JOBS);
+        localStorage.setItem("jst_jobs_v2", JSON.stringify(INITIAL_JOBS));
+      }
     } catch { setJobs(INITIAL_JOBS); }
     setLoaded(true);
   }, []);
@@ -188,6 +202,10 @@ export default function App() {
   const deleteJob = async (id) => {
     await save(jobs.filter(j => j.id !== id));
     if (aiPanel?.id === id) setAiPanel(null);
+    try {
+      const deleted = JSON.parse(localStorage.getItem("jst_deleted_ids") || "[]");
+      localStorage.setItem("jst_deleted_ids", JSON.stringify([...deleted, id]));
+    } catch {}
   };
 
   const updateStatus = async (id, status) => save(jobs.map(j => j.id === id ? { ...j, status } : j));
