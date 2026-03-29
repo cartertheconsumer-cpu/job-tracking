@@ -78,15 +78,15 @@ function JobCard({ job, aiPanel, setAiPanel, aiMode, setAiMode, aiResult, setAiR
             <input type="checkbox" checked={isSelected} onChange={()=>onToggleSelect(job.id)}
               style={{ width:15, height:15, cursor:"pointer", accentColor:"#6366F1", flexShrink:0 }} />
             <span style={{ fontWeight:500, fontSize:15 }}>{job.company}</span>
-            <span style={{ fontSize:13, color:"#6B7280" }}>— {job.role}</span>
+            <span style={{ fontSize:13, color:"#374151" }}>— {job.role}</span>
             {job.repvue && <span style={{ fontSize:11, fontWeight:700, padding:"1px 6px", borderRadius:4, background:"#1a2744", color:"#fff" }}>RepVue {job.repvue}</span>}
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
             <Badge label={job.status} colors={STATUS_COLORS[job.status]} />
             <Badge label={job.mode} colors={{ bg: MODE_COLORS[job.mode]?.bg||"#f3f4f6", text: MODE_COLORS[job.mode]?.text||"#374151", border: MODE_COLORS[job.mode]?.bg||"#f3f4f6" }} />
-            <span style={{ fontSize:12, color:"#6B7280" }}>{job.location}</span>
+            <span style={{ fontSize:12, color:"#374151" }}>{job.location}</span>
           </div>
-          <p style={{ margin:"6px 0 0", fontSize:13, color:"#6B7280", lineHeight:1.55 }}>{job.pay}</p>
+          <p style={{ margin:"6px 0 0", fontSize:13, color:"#374151", lineHeight:1.55 }}>{job.pay}</p>
         </div>
         <div style={{ display:"flex", gap:5, alignItems:"center", flexShrink:0, flexWrap:"wrap" }}>
           <select value={job.status} onChange={e=>updateStatus(job.id,e.target.value)}
@@ -96,15 +96,15 @@ function JobCard({ job, aiPanel, setAiPanel, aiMode, setAiMode, aiResult, setAiR
           <button onClick={()=>{ setAiPanel(aiPanel?.id===job.id?null:job); setAiResult(""); setJdInput(""); }}
             style={{ fontSize:12, padding:"3px 10px", cursor:"pointer", background:aiPanel?.id===job.id?"#EFF6FF":"transparent", color:aiPanel?.id===job.id?"#2563EB":"#1a2744", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>AI</button>
           <button onClick={()=>openForm(job)} style={{ fontSize:12, padding:"3px 8px", cursor:"pointer", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>Edit</button>
-          <button onClick={()=>deleteJob(job.id)} style={{ fontSize:12, padding:"3px 8px", cursor:"pointer", color:"#DC2626", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>Del</button>
+          <button onClick={()=>deleteJob(job.id)} style={{ fontSize:13, padding:"2px 8px", cursor:"pointer", color:"#fff", background:"#DC2626", border:"none", borderRadius:6, fontWeight:700, lineHeight:"20px" }}>✕</button>
         </div>
       </div>
 
-      <p style={{ margin:"10px 0 0", fontSize:13, color:"#6B7280", lineHeight:1.6, borderLeft:"2px solid rgba(0,0,0,0.08)", paddingLeft:10 }}>{job.summary}</p>
+      <p style={{ margin:"10px 0 0", fontSize:13, color:"#374151", lineHeight:1.6, borderLeft:"2px solid rgba(0,0,0,0.08)", paddingLeft:10 }}>{job.summary}</p>
 
       <div style={{ display:"flex", alignItems:"center", gap:12, marginTop:8, flexWrap:"wrap" }}>
-        {job.dateApplied && <span style={{ fontSize:12, color:"#6B7280" }}>Applied {job.dateApplied}</span>}
-        {job.followUp && <span style={{ fontSize:12, color:"#6B7280", display:"flex", alignItems:"center" }}><OverdueDot followUp={job.followUp} />Follow-up {job.followUp}</span>}
+        {job.dateApplied && <span style={{ fontSize:12, color:"#374151" }}>Applied {job.dateApplied}</span>}
+        {job.followUp && <span style={{ fontSize:12, color:"#374151", display:"flex", alignItems:"center" }}><OverdueDot followUp={job.followUp} />Follow-up {job.followUp}</span>}
         {job.url && <a href={job.url} target="_blank" rel="noopener noreferrer" style={{ fontSize:12, color:"#2563EB", textDecoration:"none" }}>Job link ↗</a>}
       </div>
 
@@ -121,7 +121,7 @@ function JobCard({ job, aiPanel, setAiPanel, aiMode, setAiMode, aiResult, setAiR
           </div>
         ) : (
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:8 }}>
-            <p style={{ margin:0, fontSize:13, color: job.notes?"#1a2744":"#D1D5DB" }}>{job.notes||"No interview notes yet."}</p>
+            <p style={{ margin:0, fontSize:13, color: job.notes?"#1a2744":"#9CA3AF" }}>{job.notes||"No interview notes yet."}</p>
             <button onClick={()=>{ setEditingNotes(job.id); setLocalNotes(job.notes||""); }} style={{ fontSize:12, padding:"2px 8px", cursor:"pointer", flexShrink:0, border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>Edit notes</button>
           </div>
         )}
@@ -133,7 +133,7 @@ function JobCard({ job, aiPanel, setAiPanel, aiMode, setAiMode, aiResult, setAiR
           <div style={{ display:"flex", gap:6, marginBottom:10, flexWrap:"wrap" }}>
             {AI_MODES.map(m=>(
               <button key={m.id} onClick={()=>{ setAiMode(m.id); setAiResult(""); }}
-                style={{ fontSize:12, padding:"4px 12px", cursor:"pointer", background:aiMode===m.id?"#EFF6FF":"transparent", color:aiMode===m.id?"#2563EB":"#6B7280", fontWeight:aiMode===m.id?500:400, border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>
+                style={{ fontSize:12, padding:"4px 12px", cursor:"pointer", background:aiMode===m.id?"#EFF6FF":"transparent", color:aiMode===m.id?"#2563EB":"#374151", fontWeight:aiMode===m.id?500:400, border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>
                 {m.label}
               </button>
             ))}
@@ -249,7 +249,7 @@ export default function App() {
   const techSales = jobs.filter(j => j.track==="Tech Sales" && (filterStatus==="All"||j.status===filterStatus));
   const wfhNow = jobs.filter(j => j.track==="WFH Now" && (filterStatus==="All"||j.status===filterStatus));
 
-  if (!loaded) return <div style={{ padding:"2rem", color:"#6B7280", fontSize:14 }}>Loading...</div>;
+  if (!loaded) return <div style={{ padding:"2rem", color:"#374151", fontSize:14 }}>Loading...</div>;
 
   const cardProps = { aiPanel, setAiPanel, aiMode, setAiMode, aiResult, setAiResult, jdInput, setJdInput, aiLoading, runAI, updateStatus, openForm, deleteJob, editingNotes, setEditingNotes, saveNotes, onToggleSelect: toggleSelect };
 
@@ -259,9 +259,9 @@ export default function App() {
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"1.25rem" }}>
         <div>
           <h2 style={{ margin:0, fontSize:18, fontWeight:500 }}>Job search tracker</h2>
-          <p style={{ margin:"2px 0 0", fontSize:13, color:"#6B7280" }}>{jobs.length} roles · March 2026</p>
+          <p style={{ margin:"2px 0 0", fontSize:13, color:"#374151" }}>{jobs.length} roles · March 2026</p>
         </div>
-        <button onClick={()=>openForm()} style={{ fontSize:13, padding:"6px 14px", cursor:"pointer", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6, background:"#ffffff" }}>+ Add role</button>
+        <button onClick={()=>openForm()} style={{ fontSize:13, padding:"6px 14px", cursor:"pointer", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6, background:"#ffffff", color:"#000000" }}>+ Add role</button>
       </div>
 
       {/* Stats */}
@@ -270,7 +270,7 @@ export default function App() {
           <div key={s} onClick={()=>setFilterStatus(filterStatus===s?"All":s)}
             style={{ background:filterStatus===s?STATUS_COLORS[s].bg:"#f3f4f6", border:`0.5px solid ${filterStatus===s?STATUS_COLORS[s].border:"rgba(0,0,0,0.08)"}`, borderRadius:"8px", padding:"8px 10px", cursor:"pointer", textAlign:"center", transition:"all 0.15s ease" }}>
             <div style={{ fontSize:18, fontWeight:500, color:STATUS_COLORS[s].text }}>{stats[s]||0}</div>
-            <div style={{ fontSize:11, color:"#6B7280", marginTop:2 }}>{s}</div>
+            <div style={{ fontSize:11, color:"#374151", marginTop:2 }}>{s}</div>
           </div>
         ))}
       </div>
@@ -280,7 +280,7 @@ export default function App() {
         <>
           <div style={{ display:"flex", alignItems:"center", gap:12, margin:"20px 0 12px" }}>
             <div style={{ flex:1, height:"0.5px", background:"rgba(0,0,0,0.08)" }} />
-            <span style={{ fontSize:12, fontWeight:500, color:"#065F46", whiteSpace:"nowrap" }}>Track 1 · Fast Track — High Opportunity</span>
+            <span style={{ fontSize:12, fontWeight:500, color:"#ffffff", whiteSpace:"nowrap" }}>Track 1 · Fast Track — High Opportunity</span>
             <div style={{ flex:1, height:"0.5px", background:"rgba(0,0,0,0.08)" }} />
           </div>
           {fastTrack.map(job => <JobCard key={job.id} job={job} {...cardProps} isSelected={selectedIds.has(job.id)} />)}
@@ -292,7 +292,7 @@ export default function App() {
         <>
           <div style={{ display:"flex", alignItems:"center", gap:12, margin:"20px 0 12px" }}>
             <div style={{ flex:1, height:"0.5px", background:"rgba(0,0,0,0.08)" }} />
-            <span style={{ fontSize:12, fontWeight:500, color:"#4338CA", whiteSpace:"nowrap" }}>Track 2 · Tech Sales — SDR/BDR (RepVue Vetted)</span>
+            <span style={{ fontSize:12, fontWeight:500, color:"#ffffff", whiteSpace:"nowrap" }}>Track 2 · Tech Sales — SDR/BDR (RepVue Vetted)</span>
             <div style={{ flex:1, height:"0.5px", background:"rgba(0,0,0,0.08)" }} />
           </div>
           {techSales.map(job => <JobCard key={job.id} job={job} {...cardProps} isSelected={selectedIds.has(job.id)} />)}
@@ -304,7 +304,7 @@ export default function App() {
         <>
           <div style={{ display:"flex", alignItems:"center", gap:12, margin:"20px 0 12px" }}>
             <div style={{ flex:1, height:"0.5px", background:"rgba(0,0,0,0.08)" }} />
-            <span style={{ fontSize:12, fontWeight:500, color:"#9A3412", whiteSpace:"nowrap" }}>Track 3 · WFH Now — Remote, Hiring Fast</span>
+            <span style={{ fontSize:12, fontWeight:500, color:"#ffffff", whiteSpace:"nowrap" }}>Track 3 · WFH Now — Remote, Hiring Fast</span>
             <div style={{ flex:1, height:"0.5px", background:"rgba(0,0,0,0.08)" }} />
           </div>
           {wfhNow.map(job => <JobCard key={job.id} job={job} {...cardProps} isSelected={selectedIds.has(job.id)} />)}
@@ -312,7 +312,7 @@ export default function App() {
       )}
 
       {fastTrack.length===0 && techSales.length===0 && wfhNow.length===0 && (
-        <div style={{ textAlign:"center", padding:"3rem 0", color:"#6B7280", fontSize:14 }}>No roles match that filter.</div>
+        <div style={{ textAlign:"center", padding:"3rem 0", color:"#374151", fontSize:14 }}>No roles match that filter.</div>
       )}
 
       {/* Bulk Action Bar */}
@@ -345,34 +345,34 @@ export default function App() {
             <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
               {[["Company","company",""],["Role","role",""],["URL","url","https://..."],["Location","location",""],["Pay","pay",""],["Commute","commute",""],["RepVue Score","repvue",""],["Date applied","dateApplied","YYYY-MM-DD"],["Follow-up date","followUp","YYYY-MM-DD"]].map(([lbl,key,ph])=>(
                 <div key={key}>
-                  <label style={{ fontSize:12, color:"#6B7280", display:"block", marginBottom:4 }}>{lbl}</label>
+                  <label style={{ fontSize:12, color:"#374151", display:"block", marginBottom:4 }}>{lbl}</label>
                   <input value={form[key]||""} onChange={e=>setForm({...form,[key]:e.target.value})} placeholder={ph}
                     style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744", boxSizing:"border-box" }} />
                 </div>
               ))}
               <div>
-                <label style={{ fontSize:12, color:"#6B7280", display:"block", marginBottom:4 }}>Track</label>
+                <label style={{ fontSize:12, color:"#374151", display:"block", marginBottom:4 }}>Track</label>
                 <select value={form.track} onChange={e=>setForm({...form,track:e.target.value})}
                   style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744" }}>
                   <option>Fast Track</option><option>Tech Sales</option><option>WFH Now</option>
                 </select>
               </div>
               <div>
-                <label style={{ fontSize:12, color:"#6B7280", display:"block", marginBottom:4 }}>Mode</label>
+                <label style={{ fontSize:12, color:"#374151", display:"block", marginBottom:4 }}>Mode</label>
                 <select value={form.mode} onChange={e=>setForm({...form,mode:e.target.value})}
                   style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744" }}>
                   <option>In-Person</option><option>Remote</option><option>Hybrid</option>
                 </select>
               </div>
               <div>
-                <label style={{ fontSize:12, color:"#6B7280", display:"block", marginBottom:4 }}>Status</label>
+                <label style={{ fontSize:12, color:"#374151", display:"block", marginBottom:4 }}>Status</label>
                 <select value={form.status} onChange={e=>setForm({...form,status:e.target.value})}
                   style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744" }}>
                   {STATUSES.map(s=><option key={s}>{s}</option>)}
                 </select>
               </div>
               <div>
-                <label style={{ fontSize:12, color:"#6B7280", display:"block", marginBottom:4 }}>Summary</label>
+                <label style={{ fontSize:12, color:"#374151", display:"block", marginBottom:4 }}>Summary</label>
                 <textarea value={form.summary||""} onChange={e=>setForm({...form,summary:e.target.value})} rows={3}
                   style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744", resize:"vertical", boxSizing:"border-box" }} />
               </div>
