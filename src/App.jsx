@@ -68,83 +68,85 @@ function OverdueDot({ followUp }) {
   return <span style={{ display:"inline-block", width:7, height:7, borderRadius:"50%", background: overdue?"#EF4444":"#10B981", marginRight:5, flexShrink:0 }} title={overdue?"Follow-up overdue":"Upcoming"} />;
 }
 
-function JobCard({ job, aiPanel, setAiPanel, aiMode, setAiMode, aiResult, setAiResult, jdInput, setJdInput, aiLoading, runAI, updateStatus, openForm, deleteJob, editingNotes, setEditingNotes, saveNotes }) {
+function JobCard({ job, aiPanel, setAiPanel, aiMode, setAiMode, aiResult, setAiResult, jdInput, setJdInput, aiLoading, runAI, updateStatus, openForm, deleteJob, editingNotes, setEditingNotes, saveNotes, isSelected, onToggleSelect }) {
   const [localNotes, setLocalNotes] = useState("");
   return (
-    <div style={{ background:"var(--color-background-primary)", border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-lg)", padding:"14px 16px", marginBottom:10 }}>
+    <div style={{ background:"#ffffff", border:`0.5px solid ${isSelected?"#6366F1":"rgba(0,0,0,0.08)"}`, borderRadius:"12px", padding:"14px 16px", marginBottom:10, transition:"border-color 0.15s ease" }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:8, flexWrap:"wrap" }}>
         <div style={{ flex:1, minWidth:0 }}>
           <div style={{ display:"flex", alignItems:"center", gap:6, flexWrap:"wrap", marginBottom:4 }}>
+            <input type="checkbox" checked={isSelected} onChange={()=>onToggleSelect(job.id)}
+              style={{ width:15, height:15, cursor:"pointer", accentColor:"#6366F1", flexShrink:0 }} />
             <span style={{ fontWeight:500, fontSize:15 }}>{job.company}</span>
-            <span style={{ fontSize:13, color:"var(--color-text-secondary)" }}>— {job.role}</span>
+            <span style={{ fontSize:13, color:"#6B7280" }}>— {job.role}</span>
             {job.repvue && <span style={{ fontSize:11, fontWeight:700, padding:"1px 6px", borderRadius:4, background:"#1a2744", color:"#fff" }}>RepVue {job.repvue}</span>}
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
             <Badge label={job.status} colors={STATUS_COLORS[job.status]} />
             <Badge label={job.mode} colors={{ bg: MODE_COLORS[job.mode]?.bg||"#f3f4f6", text: MODE_COLORS[job.mode]?.text||"#374151", border: MODE_COLORS[job.mode]?.bg||"#f3f4f6" }} />
-            <span style={{ fontSize:12, color:"var(--color-text-secondary)" }}>{job.location}</span>
+            <span style={{ fontSize:12, color:"#6B7280" }}>{job.location}</span>
           </div>
-          <p style={{ margin:"6px 0 0", fontSize:13, color:"var(--color-text-secondary)", lineHeight:1.55 }}>{job.pay}</p>
+          <p style={{ margin:"6px 0 0", fontSize:13, color:"#6B7280", lineHeight:1.55 }}>{job.pay}</p>
         </div>
         <div style={{ display:"flex", gap:5, alignItems:"center", flexShrink:0, flexWrap:"wrap" }}>
           <select value={job.status} onChange={e=>updateStatus(job.id,e.target.value)}
-            style={{ fontSize:12, padding:"3px 6px", borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)", cursor:"pointer" }}>
+            style={{ fontSize:12, padding:"3px 6px", borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744", cursor:"pointer" }}>
             {STATUSES.map(s=><option key={s}>{s}</option>)}
           </select>
           <button onClick={()=>{ setAiPanel(aiPanel?.id===job.id?null:job); setAiResult(""); setJdInput(""); }}
-            style={{ fontSize:12, padding:"3px 10px", cursor:"pointer", background:aiPanel?.id===job.id?"var(--color-background-info)":"transparent", color:aiPanel?.id===job.id?"var(--color-text-info)":"var(--color-text-primary)", border:"0.5px solid var(--color-border-secondary)", borderRadius:6 }}>AI</button>
-          <button onClick={()=>openForm(job)} style={{ fontSize:12, padding:"3px 8px", cursor:"pointer", border:"0.5px solid var(--color-border-secondary)", borderRadius:6 }}>Edit</button>
-          <button onClick={()=>deleteJob(job.id)} style={{ fontSize:12, padding:"3px 8px", cursor:"pointer", color:"var(--color-text-danger)", border:"0.5px solid var(--color-border-secondary)", borderRadius:6 }}>Del</button>
+            style={{ fontSize:12, padding:"3px 10px", cursor:"pointer", background:aiPanel?.id===job.id?"#EFF6FF":"transparent", color:aiPanel?.id===job.id?"#2563EB":"#1a2744", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>AI</button>
+          <button onClick={()=>openForm(job)} style={{ fontSize:12, padding:"3px 8px", cursor:"pointer", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>Edit</button>
+          <button onClick={()=>deleteJob(job.id)} style={{ fontSize:12, padding:"3px 8px", cursor:"pointer", color:"#DC2626", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>Del</button>
         </div>
       </div>
 
-      <p style={{ margin:"10px 0 0", fontSize:13, color:"var(--color-text-secondary)", lineHeight:1.6, borderLeft:"2px solid var(--color-border-tertiary)", paddingLeft:10 }}>{job.summary}</p>
+      <p style={{ margin:"10px 0 0", fontSize:13, color:"#6B7280", lineHeight:1.6, borderLeft:"2px solid rgba(0,0,0,0.08)", paddingLeft:10 }}>{job.summary}</p>
 
       <div style={{ display:"flex", alignItems:"center", gap:12, marginTop:8, flexWrap:"wrap" }}>
-        {job.dateApplied && <span style={{ fontSize:12, color:"var(--color-text-secondary)" }}>Applied {job.dateApplied}</span>}
-        {job.followUp && <span style={{ fontSize:12, color:"var(--color-text-secondary)", display:"flex", alignItems:"center" }}><OverdueDot followUp={job.followUp} />Follow-up {job.followUp}</span>}
-        {job.url && <a href={job.url} target="_blank" rel="noopener noreferrer" style={{ fontSize:12, color:"var(--color-text-info)", textDecoration:"none" }}>Job link ↗</a>}
+        {job.dateApplied && <span style={{ fontSize:12, color:"#6B7280" }}>Applied {job.dateApplied}</span>}
+        {job.followUp && <span style={{ fontSize:12, color:"#6B7280", display:"flex", alignItems:"center" }}><OverdueDot followUp={job.followUp} />Follow-up {job.followUp}</span>}
+        {job.url && <a href={job.url} target="_blank" rel="noopener noreferrer" style={{ fontSize:12, color:"#2563EB", textDecoration:"none" }}>Job link ↗</a>}
       </div>
 
       {/* Notes */}
-      <div style={{ marginTop:10, borderTop:"0.5px solid var(--color-border-tertiary)", paddingTop:8 }}>
+      <div style={{ marginTop:10, borderTop:"0.5px solid rgba(0,0,0,0.08)", paddingTop:8 }}>
         {editingNotes===job.id ? (
           <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
             <textarea value={localNotes} onChange={e=>setLocalNotes(e.target.value)} rows={3}
-              style={{ fontSize:13, padding:8, borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)", resize:"vertical", width:"100%", boxSizing:"border-box" }} />
+              style={{ fontSize:13, padding:8, borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744", resize:"vertical", width:"100%", boxSizing:"border-box" }} />
             <div style={{ display:"flex", gap:6 }}>
-              <button onClick={()=>saveNotes(job.id, localNotes)} style={{ fontSize:12, padding:"3px 10px", cursor:"pointer", border:"0.5px solid var(--color-border-secondary)", borderRadius:6 }}>Save</button>
-              <button onClick={()=>setEditingNotes(null)} style={{ fontSize:12, padding:"3px 10px", cursor:"pointer", border:"0.5px solid var(--color-border-secondary)", borderRadius:6 }}>Cancel</button>
+              <button onClick={()=>saveNotes(job.id, localNotes)} style={{ fontSize:12, padding:"3px 10px", cursor:"pointer", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>Save</button>
+              <button onClick={()=>setEditingNotes(null)} style={{ fontSize:12, padding:"3px 10px", cursor:"pointer", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>Cancel</button>
             </div>
           </div>
         ) : (
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:8 }}>
-            <p style={{ margin:0, fontSize:13, color: job.notes?"var(--color-text-primary)":"var(--color-text-tertiary)" }}>{job.notes||"No interview notes yet."}</p>
-            <button onClick={()=>{ setEditingNotes(job.id); setLocalNotes(job.notes||""); }} style={{ fontSize:12, padding:"2px 8px", cursor:"pointer", flexShrink:0, border:"0.5px solid var(--color-border-secondary)", borderRadius:6 }}>Edit notes</button>
+            <p style={{ margin:0, fontSize:13, color: job.notes?"#1a2744":"#D1D5DB" }}>{job.notes||"No interview notes yet."}</p>
+            <button onClick={()=>{ setEditingNotes(job.id); setLocalNotes(job.notes||""); }} style={{ fontSize:12, padding:"2px 8px", cursor:"pointer", flexShrink:0, border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>Edit notes</button>
           </div>
         )}
       </div>
 
       {/* AI Panel */}
       {aiPanel?.id===job.id && (
-        <div style={{ marginTop:12, borderTop:"0.5px solid var(--color-border-tertiary)", paddingTop:10 }}>
+        <div style={{ marginTop:12, borderTop:"0.5px solid rgba(0,0,0,0.08)", paddingTop:10 }}>
           <div style={{ display:"flex", gap:6, marginBottom:10, flexWrap:"wrap" }}>
             {AI_MODES.map(m=>(
               <button key={m.id} onClick={()=>{ setAiMode(m.id); setAiResult(""); }}
-                style={{ fontSize:12, padding:"4px 12px", cursor:"pointer", background:aiMode===m.id?"var(--color-background-info)":"transparent", color:aiMode===m.id?"var(--color-text-info)":"var(--color-text-secondary)", fontWeight:aiMode===m.id?500:400, border:"0.5px solid var(--color-border-secondary)", borderRadius:6 }}>
+                style={{ fontSize:12, padding:"4px 12px", cursor:"pointer", background:aiMode===m.id?"#EFF6FF":"transparent", color:aiMode===m.id?"#2563EB":"#6B7280", fontWeight:aiMode===m.id?500:400, border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>
                 {m.label}
               </button>
             ))}
           </div>
           {(aiMode==="analyze"||aiMode==="cover") && (
             <textarea placeholder="Paste job description here (optional but recommended)..." value={jdInput} onChange={e=>setJdInput(e.target.value)} rows={3}
-              style={{ width:"100%", fontSize:13, padding:8, borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)", resize:"vertical", boxSizing:"border-box", marginBottom:8 }} />
+              style={{ width:"100%", fontSize:13, padding:8, borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744", resize:"vertical", boxSizing:"border-box", marginBottom:8 }} />
           )}
-          <button onClick={()=>runAI(job)} disabled={aiLoading} style={{ fontSize:13, padding:"6px 14px", cursor:"pointer", marginBottom:10, border:"0.5px solid var(--color-border-secondary)", borderRadius:6, background:aiLoading?"var(--color-background-secondary)":"var(--color-background-primary)" }}>
+          <button onClick={()=>runAI(job)} disabled={aiLoading} style={{ fontSize:13, padding:"6px 14px", cursor:"pointer", marginBottom:10, border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6, background:aiLoading?"#f3f4f6":"#ffffff" }}>
             {aiLoading?"Running...": `Run — ${AI_MODES.find(m=>m.id===aiMode)?.label}`}
           </button>
           {aiResult && (
-            <div style={{ fontSize:13, lineHeight:1.7, background:"var(--color-background-secondary)", borderRadius:"var(--border-radius-md)", padding:"10px 14px", whiteSpace:"pre-wrap", color:"var(--color-text-primary)" }}>
+            <div style={{ fontSize:13, lineHeight:1.7, background:"#f3f4f6", borderRadius:"8px", padding:"10px 14px", whiteSpace:"pre-wrap", color:"#1a2744" }}>
               {aiResult}
             </div>
           )}
@@ -165,6 +167,8 @@ export default function App() {
   const [aiLoading, setAiLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState("All");
   const [editingNotes, setEditingNotes] = useState(null);
+  const [selectedIds, setSelectedIds] = useState(new Set());
+  const [bulkStatus, setBulkStatus] = useState("Applied");
 
   useEffect(() => {
     try {
@@ -210,6 +214,13 @@ export default function App() {
 
   const updateStatus = async (id, status) => save(jobs.map(j => j.id === id ? { ...j, status } : j));
 
+  const toggleSelect = (id) => setSelectedIds(prev => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; });
+  const clearSelection = () => setSelectedIds(new Set());
+  const bulkUpdateStatus = async () => {
+    await save(jobs.map(j => selectedIds.has(j.id) ? { ...j, status: bulkStatus } : j));
+    clearSelection();
+  };
+
   const saveNotes = async (id, notes) => {
     await save(jobs.map(j => j.id === id ? { ...j, notes } : j));
     setEditingNotes(null);
@@ -238,28 +249,28 @@ export default function App() {
   const techSales = jobs.filter(j => j.track==="Tech Sales" && (filterStatus==="All"||j.status===filterStatus));
   const wfhNow = jobs.filter(j => j.track==="WFH Now" && (filterStatus==="All"||j.status===filterStatus));
 
-  if (!loaded) return <div style={{ padding:"2rem", color:"var(--color-text-secondary)", fontSize:14 }}>Loading...</div>;
+  if (!loaded) return <div style={{ padding:"2rem", color:"#6B7280", fontSize:14 }}>Loading...</div>;
 
-  const cardProps = { aiPanel, setAiPanel, aiMode, setAiMode, aiResult, setAiResult, jdInput, setJdInput, aiLoading, runAI, updateStatus, openForm, deleteJob, editingNotes, setEditingNotes, saveNotes };
+  const cardProps = { aiPanel, setAiPanel, aiMode, setAiMode, aiResult, setAiResult, jdInput, setJdInput, aiLoading, runAI, updateStatus, openForm, deleteJob, editingNotes, setEditingNotes, saveNotes, onToggleSelect: toggleSelect };
 
   return (
-    <div style={{ fontFamily:"var(--font-sans)", padding:"1.25rem", maxWidth:900, margin:"0 auto" }}>
+    <div style={{ fontFamily:"-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif", padding:"1.25rem", maxWidth:900, margin:"0 auto" }}>
       {/* Header */}
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"1.25rem" }}>
         <div>
           <h2 style={{ margin:0, fontSize:18, fontWeight:500 }}>Job search tracker</h2>
-          <p style={{ margin:"2px 0 0", fontSize:13, color:"var(--color-text-secondary)" }}>{jobs.length} roles · March 2026</p>
+          <p style={{ margin:"2px 0 0", fontSize:13, color:"#6B7280" }}>{jobs.length} roles · March 2026</p>
         </div>
-        <button onClick={()=>openForm()} style={{ fontSize:13, padding:"6px 14px", cursor:"pointer", border:"0.5px solid var(--color-border-secondary)", borderRadius:6, background:"var(--color-background-primary)" }}>+ Add role</button>
+        <button onClick={()=>openForm()} style={{ fontSize:13, padding:"6px 14px", cursor:"pointer", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6, background:"#ffffff" }}>+ Add role</button>
       </div>
 
       {/* Stats */}
       <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:8, marginBottom:"1.25rem" }}>
         {STATUSES.map(s=>(
           <div key={s} onClick={()=>setFilterStatus(filterStatus===s?"All":s)}
-            style={{ background:filterStatus===s?STATUS_COLORS[s].bg:"var(--color-background-secondary)", border:`0.5px solid ${filterStatus===s?STATUS_COLORS[s].border:"var(--color-border-tertiary)"}`, borderRadius:"var(--border-radius-md)", padding:"8px 10px", cursor:"pointer", textAlign:"center", transition:"all 0.15s ease" }}>
+            style={{ background:filterStatus===s?STATUS_COLORS[s].bg:"#f3f4f6", border:`0.5px solid ${filterStatus===s?STATUS_COLORS[s].border:"rgba(0,0,0,0.08)"}`, borderRadius:"8px", padding:"8px 10px", cursor:"pointer", textAlign:"center", transition:"all 0.15s ease" }}>
             <div style={{ fontSize:18, fontWeight:500, color:STATUS_COLORS[s].text }}>{stats[s]||0}</div>
-            <div style={{ fontSize:11, color:"var(--color-text-secondary)", marginTop:2 }}>{s}</div>
+            <div style={{ fontSize:11, color:"#6B7280", marginTop:2 }}>{s}</div>
           </div>
         ))}
       </div>
@@ -268,11 +279,11 @@ export default function App() {
       {fastTrack.length > 0 && (
         <>
           <div style={{ display:"flex", alignItems:"center", gap:12, margin:"20px 0 12px" }}>
-            <div style={{ flex:1, height:"0.5px", background:"var(--color-border-tertiary)" }} />
+            <div style={{ flex:1, height:"0.5px", background:"rgba(0,0,0,0.08)" }} />
             <span style={{ fontSize:12, fontWeight:500, color:"#065F46", whiteSpace:"nowrap" }}>Track 1 · Fast Track — High Opportunity</span>
-            <div style={{ flex:1, height:"0.5px", background:"var(--color-border-tertiary)" }} />
+            <div style={{ flex:1, height:"0.5px", background:"rgba(0,0,0,0.08)" }} />
           </div>
-          {fastTrack.map(job => <JobCard key={job.id} job={job} {...cardProps} />)}
+          {fastTrack.map(job => <JobCard key={job.id} job={job} {...cardProps} isSelected={selectedIds.has(job.id)} />)}
         </>
       )}
 
@@ -280,11 +291,11 @@ export default function App() {
       {techSales.length > 0 && (
         <>
           <div style={{ display:"flex", alignItems:"center", gap:12, margin:"20px 0 12px" }}>
-            <div style={{ flex:1, height:"0.5px", background:"var(--color-border-tertiary)" }} />
+            <div style={{ flex:1, height:"0.5px", background:"rgba(0,0,0,0.08)" }} />
             <span style={{ fontSize:12, fontWeight:500, color:"#4338CA", whiteSpace:"nowrap" }}>Track 2 · Tech Sales — SDR/BDR (RepVue Vetted)</span>
-            <div style={{ flex:1, height:"0.5px", background:"var(--color-border-tertiary)" }} />
+            <div style={{ flex:1, height:"0.5px", background:"rgba(0,0,0,0.08)" }} />
           </div>
-          {techSales.map(job => <JobCard key={job.id} job={job} {...cardProps} />)}
+          {techSales.map(job => <JobCard key={job.id} job={job} {...cardProps} isSelected={selectedIds.has(job.id)} />)}
         </>
       )}
 
@@ -292,62 +303,83 @@ export default function App() {
       {wfhNow.length > 0 && (
         <>
           <div style={{ display:"flex", alignItems:"center", gap:12, margin:"20px 0 12px" }}>
-            <div style={{ flex:1, height:"0.5px", background:"var(--color-border-tertiary)" }} />
+            <div style={{ flex:1, height:"0.5px", background:"rgba(0,0,0,0.08)" }} />
             <span style={{ fontSize:12, fontWeight:500, color:"#9A3412", whiteSpace:"nowrap" }}>Track 3 · WFH Now — Remote, Hiring Fast</span>
-            <div style={{ flex:1, height:"0.5px", background:"var(--color-border-tertiary)" }} />
+            <div style={{ flex:1, height:"0.5px", background:"rgba(0,0,0,0.08)" }} />
           </div>
-          {wfhNow.map(job => <JobCard key={job.id} job={job} {...cardProps} />)}
+          {wfhNow.map(job => <JobCard key={job.id} job={job} {...cardProps} isSelected={selectedIds.has(job.id)} />)}
         </>
       )}
 
       {fastTrack.length===0 && techSales.length===0 && wfhNow.length===0 && (
-        <div style={{ textAlign:"center", padding:"3rem 0", color:"var(--color-text-secondary)", fontSize:14 }}>No roles match that filter.</div>
+        <div style={{ textAlign:"center", padding:"3rem 0", color:"#6B7280", fontSize:14 }}>No roles match that filter.</div>
+      )}
+
+      {/* Bulk Action Bar */}
+      {selectedIds.size > 0 && (
+        <div style={{ position:"fixed", bottom:24, left:"50%", transform:"translateX(-50%)", background:"#1a2744", color:"#fff", borderRadius:12, padding:"10px 16px", display:"flex", alignItems:"center", gap:10, boxShadow:"0 4px 20px rgba(0,0,0,0.25)", zIndex:200, flexWrap:"wrap" }}>
+          <span style={{ fontSize:13, fontWeight:500 }}>{selectedIds.size} selected</span>
+          <span style={{ opacity:0.4 }}>·</span>
+          <span style={{ fontSize:13, opacity:0.8 }}>Set status:</span>
+          <select value={bulkStatus} onChange={e=>setBulkStatus(e.target.value)}
+            style={{ fontSize:13, padding:"4px 8px", borderRadius:6, border:"none", background:"rgba(255,255,255,0.15)", color:"#fff", cursor:"pointer" }}>
+            {STATUSES.map(s=><option key={s} style={{ background:"#1a2744" }}>{s}</option>)}
+          </select>
+          <button type="button" onClick={bulkUpdateStatus}
+            style={{ fontSize:13, padding:"5px 14px", borderRadius:6, background:"#6366F1", color:"#fff", border:"none", cursor:"pointer", fontWeight:600 }}>
+            Apply
+          </button>
+          <button type="button" onClick={clearSelection}
+            style={{ fontSize:13, padding:"5px 10px", borderRadius:6, background:"rgba(255,255,255,0.12)", color:"#fff", border:"none", cursor:"pointer" }}>
+            Clear
+          </button>
+        </div>
       )}
 
       {/* Add/Edit Modal */}
       {form && (
         <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.3)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:100 }}
           onClick={e=>{ if(e.target===e.currentTarget) setForm(null); }}>
-          <div style={{ background:"var(--color-background-primary)", borderRadius:"var(--border-radius-lg)", border:"0.5px solid var(--color-border-tertiary)", padding:"1.5rem", width:"100%", maxWidth:480, boxSizing:"border-box", margin:"1rem", maxHeight:"90vh", overflowY:"auto" }}>
+          <div style={{ background:"#ffffff", borderRadius:"12px", border:"0.5px solid rgba(0,0,0,0.08)", padding:"1.5rem", width:"100%", maxWidth:480, boxSizing:"border-box", margin:"1rem", maxHeight:"90vh", overflowY:"auto" }}>
             <h3 style={{ margin:"0 0 1.25rem", fontSize:16, fontWeight:500 }}>{jobs.find(j=>j.id===form.id)?"Edit role":"Add role"}</h3>
             <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
               {[["Company","company",""],["Role","role",""],["URL","url","https://..."],["Location","location",""],["Pay","pay",""],["Commute","commute",""],["RepVue Score","repvue",""],["Date applied","dateApplied","YYYY-MM-DD"],["Follow-up date","followUp","YYYY-MM-DD"]].map(([lbl,key,ph])=>(
                 <div key={key}>
-                  <label style={{ fontSize:12, color:"var(--color-text-secondary)", display:"block", marginBottom:4 }}>{lbl}</label>
+                  <label style={{ fontSize:12, color:"#6B7280", display:"block", marginBottom:4 }}>{lbl}</label>
                   <input value={form[key]||""} onChange={e=>setForm({...form,[key]:e.target.value})} placeholder={ph}
-                    style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)", boxSizing:"border-box" }} />
+                    style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744", boxSizing:"border-box" }} />
                 </div>
               ))}
               <div>
-                <label style={{ fontSize:12, color:"var(--color-text-secondary)", display:"block", marginBottom:4 }}>Track</label>
+                <label style={{ fontSize:12, color:"#6B7280", display:"block", marginBottom:4 }}>Track</label>
                 <select value={form.track} onChange={e=>setForm({...form,track:e.target.value})}
-                  style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)" }}>
+                  style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744" }}>
                   <option>Fast Track</option><option>Tech Sales</option><option>WFH Now</option>
                 </select>
               </div>
               <div>
-                <label style={{ fontSize:12, color:"var(--color-text-secondary)", display:"block", marginBottom:4 }}>Mode</label>
+                <label style={{ fontSize:12, color:"#6B7280", display:"block", marginBottom:4 }}>Mode</label>
                 <select value={form.mode} onChange={e=>setForm({...form,mode:e.target.value})}
-                  style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)" }}>
+                  style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744" }}>
                   <option>In-Person</option><option>Remote</option><option>Hybrid</option>
                 </select>
               </div>
               <div>
-                <label style={{ fontSize:12, color:"var(--color-text-secondary)", display:"block", marginBottom:4 }}>Status</label>
+                <label style={{ fontSize:12, color:"#6B7280", display:"block", marginBottom:4 }}>Status</label>
                 <select value={form.status} onChange={e=>setForm({...form,status:e.target.value})}
-                  style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)" }}>
+                  style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744" }}>
                   {STATUSES.map(s=><option key={s}>{s}</option>)}
                 </select>
               </div>
               <div>
-                <label style={{ fontSize:12, color:"var(--color-text-secondary)", display:"block", marginBottom:4 }}>Summary</label>
+                <label style={{ fontSize:12, color:"#6B7280", display:"block", marginBottom:4 }}>Summary</label>
                 <textarea value={form.summary||""} onChange={e=>setForm({...form,summary:e.target.value})} rows={3}
-                  style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)", resize:"vertical", boxSizing:"border-box" }} />
+                  style={{ width:"100%", fontSize:13, padding:"6px 10px", borderRadius:6, border:"0.5px solid rgba(0,0,0,0.15)", background:"#f3f4f6", color:"#1a2744", resize:"vertical", boxSizing:"border-box" }} />
               </div>
             </div>
             <div style={{ display:"flex", gap:8, marginTop:"1.25rem", justifyContent:"flex-end" }}>
-              <button onClick={()=>setForm(null)} style={{ fontSize:13, padding:"6px 14px", cursor:"pointer", border:"0.5px solid var(--color-border-secondary)", borderRadius:6 }}>Cancel</button>
-              <button onClick={submitForm} disabled={!form.company||!form.role} style={{ fontSize:13, padding:"6px 14px", cursor:"pointer", border:"0.5px solid var(--color-border-secondary)", borderRadius:6, opacity:(!form.company||!form.role)?0.5:1 }}>Save</button>
+              <button onClick={()=>setForm(null)} style={{ fontSize:13, padding:"6px 14px", cursor:"pointer", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6 }}>Cancel</button>
+              <button onClick={submitForm} disabled={!form.company||!form.role} style={{ fontSize:13, padding:"6px 14px", cursor:"pointer", border:"0.5px solid rgba(0,0,0,0.15)", borderRadius:6, opacity:(!form.company||!form.role)?0.5:1 }}>Save</button>
             </div>
           </div>
         </div>
