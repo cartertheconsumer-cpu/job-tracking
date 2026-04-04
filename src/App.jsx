@@ -16,15 +16,13 @@ const MODE_COLORS = {
 
 const INITIAL_JOBS = [
   { id:1, track:"Fast Track", company:"Rivian", role:"Service Support Advisor III", url:"https://rivian.com/careers", location:"Plymouth, MI", mode:"In-Person", pay:"$24.53-$27.26/hr · Est. $52K-$77K/yr", commute:"~35 min", repvue:"", summary:"Virtual point of contact for Rivian owners -- vehicle education, charging & connectivity, roadside assistance, and service intake via phone, email, chat, and SMS.", dateApplied:"", followUp:"", status:"Applied", notes:"" },
-  { id:2, track:"Fast Track", company:"Tesla", role:"Advisor, Sales", url:"https://www.tesla.com/careers", location:"Novi / Ann Arbor / West Bloomfield, MI", mode:"In-Person", pay:"Competitive hourly + commission", commute:"All within 45 min", repvue:"", summary:"Customer-facing front line at Tesla showrooms -- greeting walk-ins, educating buyers on EV lineup, facilitating the sales process, and conducting vehicle deliveries.", dateApplied:"", followUp:"", status:"Watchlist", notes:"" },
   { id:3, track:"Fast Track", company:"Lucid Motors", role:"Customer Care Specialist", url:"https://lucidmotors.com/careers", location:"Southfield, MI", mode:"In-Person", pay:"Competitive (check listing)", commute:"~15 min", repvue:"", summary:"Technical support for Lucid owners via phone, email, SMS, and chat -- vehicle troubleshooting, knowledge base documentation, and expert-level product guidance.", dateApplied:"", followUp:"", status:"Watchlist", notes:"" },
-  { id:4, track:"Fast Track", company:"Apple", role:"At Home Advisor / Specialist", url:"https://jobs.apple.com/en-us/search?location=michigan-state972", location:"Remote (Advisor) or MI Retail", mode:"Remote", pay:"Competitive hourly + benefits", commute:"Remote", repvue:"", summary:"Remote customer support via phone, chat, and email -- troubleshoot Apple products, provide technical guidance. Apple provides all equipment and training.", dateApplied:"", followUp:"", status:"Watchlist", notes:"" },
-  { id:5, track:"Fast Track", company:"Snout, Inc", role:"Business Development Rep", url:"https://jobs.gem.com/snout/", location:"Troy, MI", mode:"In-Person", pay:"$3,750/mo then $45K base / $90K OTE uncapped", commute:"~20 min", repvue:"", summary:"Outbound pipeline generation for a VC-backed vet wellness SaaS -- prospecting into veterinary practices via phone, email, LinkedIn, and in-person to book discovery meetings. Contract-to-hire.", dateApplied:"", followUp:"", status:"Watchlist", notes:"" },
+  { id:5, track:"Fast Track", company:"Snout, Inc", role:"Business Development Rep", url:"https://jobs.gem.com/snout/", location:"Troy, MI", mode:"In-Person", pay:"$3,750/mo then $45K base / $90K OTE uncapped", commute:"~20 min", repvue:"", summary:"Outbound pipeline generation for a VC-backed vet wellness SaaS -- prospecting into veterinary practices via phone, email, LinkedIn, and in-person to book discovery meetings. Contract-to-hire.", dateApplied:"", followUp:"", status:"Applied", notes:"" },
   { id:22, track:"Fast Track", company:"Percepta", role:"Customer Care Rep I -- Marketing", url:"https://www.percepta.com/careers/", location:"Dearborn, MI (Hybrid)", mode:"Hybrid", pay:"Competitive hourly + benefits", commute:"~20 min from Ferndale", repvue:"", summary:"Primary contact center for North America Ford and Lincoln dealers -- handle dealer inquiries on contest/incentive programs, vehicle ordering, scheduling, and shipping. Hybrid with WFH flexibility after training.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Automotive CX -- strong bridge from your EV interest. Ford/Lincoln dealer-facing." },
   { id:23, track:"Fast Track", company:"Percepta", role:"EV Customer Experience Specialist", url:"https://www.percepta.com/careers/", location:"Allen Park, MI", mode:"In-Person", pay:"Competitive hourly + benefits", commute:"~25 min from Ferndale", repvue:"", summary:"Support EV customers via phone, video chat, and online chat for an innovative mobility program. Provide expert product knowledge, troubleshoot issues, and build trust as a skilled advisor.", dateApplied:"", followUp:"", status:"Watchlist", notes:"EV-specific role at a TTEC joint venture. Great fit alongside your other EV applications." },
   { id:24, track:"Fast Track", company:"Carhartt", role:"Account Service Representative I", url:"https://careers.carhartt.com/", location:"Dearborn, MI (Remote)", mode:"Remote", pay:"$39K-$52K base", commute:"Remote", repvue:"", summary:"Manage and resolve order processing issues for assigned retail accounts -- monitor order pool, manage fill rates, communicate availability issues, and coordinate with Sales, Planning, and logistics. Iconic Michigan brand.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Remote, Michigan-based company. 1-2 yrs customer service required -- you exceed this." },
   { id:6, track:"Tech Sales", company:"HubSpot", role:"Outbound BDR", url:"https://www.hubspot.com/careers", location:"Remote (US)", mode:"Remote", pay:"$55K base / ~$80K OTE · Top: $120K-$170K", commute:"Remote", repvue:"84", summary:"Strategic outreach to prospective customers -- uncover pain points, qualify leads, and book meetings for AEs. 3-level BDR career progression. No prior SDR experience required.", dateApplied:"", followUp:"", status:"Watchlist", notes:"" },
-  { id:7, track:"Tech Sales", company:"Gong", role:"SDR", url:"https://www.gong.io/company/careers", location:"Hybrid", mode:"Hybrid", pay:"~$62.5K base / $90K OTE", commute:"Remote/Hybrid", repvue:"88", summary:"Generate pipeline for a top revenue intelligence platform -- prospect into target accounts, qualify leads, and work with the product you sell daily. ~65% quota attainment.", dateApplied:"", followUp:"", status:"Watchlist", notes:"" },
+  { id:7, track:"Tech Sales", company:"Gong", role:"SDR", url:"https://www.gong.io/company/careers", location:"NOT AVAILABLE DETROIT", mode:"Hybrid", pay:"~$62.5K base / $90K OTE", commute:"Remote/Hybrid", repvue:"88", summary:"Generate pipeline for a top revenue intelligence platform -- prospect into target accounts, qualify leads, and work with the product you sell daily. ~65% quota attainment.", dateApplied:"", followUp:"", status:"Watchlist", notes:"" },
   { id:8, track:"Tech Sales", company:"Atlassian", role:"SDR", url:"https://www.atlassian.com/company/careers/all-jobs", location:"Remote Eligible", mode:"Remote", pay:"$67K base / $100K OTE · Top: $150K-$200K", commute:"Remote", repvue:"85", summary:"Build pipeline for Jira, Confluence, and Trello -- multi-channel outreach using Salesforce, Gong, Outreach, and LinkedIn Navigator. No prior SDR experience required.", dateApplied:"", followUp:"", status:"Watchlist", notes:"" },
   { id:9, track:"Tech Sales", company:"ZoomInfo", role:"SDR", url:"https://www.zoominfo.com/about/careers", location:"Hybrid", mode:"Hybrid", pay:"Competitive (verify on RepVue)", commute:"Remote/Hybrid", repvue:"86", summary:"Prospect into target accounts using ZoomInfo's own data platform -- qualify leads and generate pipeline for the AE team. B2B intelligence tools used daily.", dateApplied:"", followUp:"", status:"Watchlist", notes:"" },
   { id:10, track:"Tech Sales", company:"UserGems", role:"SDR/BDR", url:"https://www.usergems.com/careers", location:"Remote", mode:"Remote", pay:"Verify on RepVue", commute:"Remote", repvue:"94", summary:"AI pipeline generation platform tracking buyer job changes. One of the highest-rated sales orgs on RepVue (94 score, 7 Reppy Awards). Fully remote, VC-backed, growth-stage.", dateApplied:"", followUp:"", status:"Watchlist", notes:"" },
@@ -42,20 +40,14 @@ const INITIAL_JOBS = [
   { id:40, track:"Tech Sales", company:"OptiSigns", role:"Business Development Representative", url:"https://www.optisigns.com/careers", location:"Houston, TX (Remote-eligible)", mode:"Remote", pay:"$50K base / $80K+ OTE (uncapped)", commute:"Remote", repvue:"", summary:"Digital signage SaaS on the front lines of expansion. BDR generates net-new pipeline through outbound prospecting. Designed as a springboard to full-cycle AE role. Uncapped commission.", dateApplied:"", followUp:"", status:"Watchlist", notes:"BDR-to-AE springboard. $50K base + uncapped commission. Clear promotion path." },
   { id:41, track:"Tech Sales", company:"SingleFile", role:"Business Development Representative", url:"https://www.singlefile.com/careers", location:"Remote (US)", mode:"Remote", pay:"Competitive base + commission", commute:"Remote", repvue:"", summary:"AI-enabled legal tech solving a $50B+ problem in compliance workflows, entity management, and Secretary of State filings. Outbound BDR: 80+ calls/day, multi-channel. Hiring multiple BDRs.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Your UWM outbound volume (80-100+ daily touches) is exactly what they want. Legal/compliance tech with clear AE growth path." },
   { id:42, track:"Tech Sales", company:"CeriFi", role:"Sales Development Representative", url:"https://www.cerifi.com/careers", location:"Remote (US)", mode:"Remote", pay:"Competitive base + commission", commute:"Remote", repvue:"", summary:"Financial education and certification platform. SDRs prospect into senior-level decision makers and start high-quality conversations. Financial services background is a direct advantage.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Financial education SaaS. Your NMLS license + mortgage background = instant credibility with their buyer persona." },
-  { id:11, track:"WFH Now", company:"Allstate", role:"Inside Sales Representative (Remote)", url:"https://www.allstate.jobs/", location:"Remote (MI eligible)", mode:"Remote", pay:"$17.50/hr base · $49K-$74K OTE (uncapped)", commute:"Remote", repvue:"66", summary:"Sell auto, home, and life insurance to warm inbound leads via phone, chat, and SMS. Allstate provides equipment, paid training, and helps you get licensed. Benefits from day one.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Will need P&C license -- Allstate helps you get it before start date." },
   { id:12, track:"WFH Now", company:"Concentrix", role:"Inside Sales Rep -- Financial (Remote)", url:"https://jobs.concentrix.com/job-search/", location:"Remote (MI eligible)", mode:"Remote", pay:"~$16-$20/hr · Est. $33K-$42K + incentives", commute:"Remote", repvue:"", summary:"Inbound/outbound sales and service for financial clients from home. Equipment and paid training provided. 80% of managers promoted from within. Fast interview process.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Check for seasonal vs. permanent postings -- permanent preferred." },
-  { id:13, track:"WFH Now", company:"Concentrix", role:"Customer Service Rep -- Financial (Remote)", url:"https://jobs.concentrix.com/job-search/", location:"Remote (MI eligible)", mode:"Remote", pay:"~$15-$19/hr · Est. $31K-$40K", commute:"Remote", repvue:"", summary:"Handle inbound customer inquiries for financial services clients via phone and chat. Work from home, equipment provided, paid training included. Quick hire -- typically 1-2 weeks.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Fallback if inside sales role isn't available -- same company, easier entry." },
-  { id:14, track:"WFH Now", company:"Liberty Mutual", role:"Licensed Customer Service Rep (Remote)", url:"https://jobs.libertymutualgroup.com/", location:"Remote", mode:"Remote", pay:"Competitive hourly + benefits", commute:"Remote", repvue:"79", summary:"Service existing policyholders via inbound calls -- handle policy changes, billing questions, and coverage reviews. Insurance license required or willingness to obtain.", dateApplied:"", followUp:"", status:"Watchlist", notes:"May need active P&C license -- check listing." },
   { id:15, track:"WFH Now", company:"SelectQuote", role:"Sales Development Advisor (Remote)", url:"https://www.selectquote.com/careers", location:"Remote", mode:"Remote", pay:"Base + commission (verify listing)", commute:"Remote", repvue:"", summary:"Qualify inbound leads for insurance products -- warm leads, no cold calling. No insurance license needed to start. High-volume, fast-paced phone sales environment.", dateApplied:"", followUp:"", status:"Watchlist", notes:"No license required -- good quick-start option." },
   { id:16, track:"WFH Now", company:"BAO Inc.", role:"SDR / Outbound Rep (Remote)", url:"https://www.bao-inc.com/careers", location:"Remote", mode:"Remote", pay:"Base + uncapped commission", commute:"Remote", repvue:"", summary:"Book qualified meetings on behalf of major tech companies like SAP, Amazon, Salesforce, and Cisco. Outbound calling into enterprise accounts. Great resume builder for tech sales.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Strong stepping stone into tech sales AE roles." },
   { id:17, track:"WFH Now", company:"Agent Alliance", role:"Customer Service/Sales Rep (WFH)", url:"https://www.indeed.com/q-remote-customer-service-l-michigan-jobs.html", location:"Remote (MI -- Canton/Ann Arbor area)", mode:"Remote", pay:"Competitive hourly", commute:"Remote", repvue:"", summary:"Remote customer service and sales support role -- handle inbound inquiries, cross-sell products, and provide account assistance. Low barrier to entry, fast hiring.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Check Indeed for latest active postings -- they hire on rolling basis." },
-  { id:25, track:"WFH Now", company:"Victra (Verizon)", role:"Wireless Sales Consultant", url:"https://www.victra.com/careers", location:"Madison Heights / Warren, MI", mode:"In-Person", pay:"$14-$20/hr base + uncapped commission · Top reps $80K+", commute:"~15-25 min from Ferndale", repvue:"", summary:"Verizon's largest premium retail partner -- sell wireless devices, rate plans, accessories, and services in-store. Immediate openings across metro Detroit. Fast hiring, paid training.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Multiple MI locations hiring now. Good quick-start income while pursuing tech sales." },
-  { id:26, track:"WFH Now", company:"JPMorgan Chase", role:"Virtual Banker I", url:"https://careers.jpmorgan.com/", location:"Detroit, MI (Remote/Hybrid)", mode:"Hybrid", pay:"Competitive hourly + Chase benefits", commute:"~20 min from Ferndale", repvue:"83", summary:"Engage clients over the phone through inbound calls -- provide customer service, sales support, and product guidance for Chase banking products. Clear promotion path.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Top-tier brand for resume. Detroit-based with remote flexibility." },
   { id:27, track:"WFH Now", company:"Henry Ford Health", role:"Patient Services Specialist I (Remote)", url:"https://www.henryford.com/careers", location:"Troy, MI (Remote for MI residents)", mode:"Remote", pay:"Competitive hourly + healthcare benefits", commute:"Remote", repvue:"", summary:"Remote patient-facing role handling scheduling, insurance verification, and patient inquiries via phone. Michigan residents only. Full benefits from a major health system.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Healthcare industry -- stable employer, great benefits. Remote for MI residents." },
   { id:33, track:"WFH Now", company:"Raymond James", role:"New Accounts Service Associate", url:"https://www.raymondjames.com/careers", location:"Southfield, MI", mode:"In-Person", pay:"Paid training + benefits", commute:"~15 min from Ferndale", repvue:"", summary:"Fortune 500 financial services firm with a major operations hub in Southfield. Paid training class starting June 2026. Client-facing role supporting financial advisors.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Paid training starts June 2026 -- apply now for pipeline. Southfield is one of their 3 main hubs." },
   { id:34, track:"WFH Now", company:"Raymond James", role:"Customer Account Associate", url:"https://www.raymondjames.com/careers", location:"Southfield, MI", mode:"In-Person", pay:"Est. $38K-$56K", commute:"~15 min from Ferndale", repvue:"", summary:"Client-facing operations role at Raymond James Southfield hub. Handle customer accounts, transfers, and admin support for financial advisors. Stable Fortune 500 employer.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Currently posted and actively hiring. Your mortgage/finance background is a direct fit." },
   { id:35, track:"WFH Now", company:"NTT DATA", role:"Customer Care Associate", url:"https://www.nttdata.com/global/en/careers", location:"Detroit, MI (Remote)", mode:"Remote", pay:"$20/hr", commute:"Remote", repvue:"", summary:"Global IT services company. Remote customer care role based in Detroit metro. $20/hr. Better resume line than generic call center -- NTT DATA is a recognized global tech brand.", dateApplied:"", followUp:"", status:"Watchlist", notes:"$20/hr remote. Global IT services company -- good brand on resume while pursuing tech sales." },
-  { id:36, track:"WFH Now", company:"CVS / Aetna", role:"Customer Service Rep -- Behavioral Health", url:"https://jobs.cvshealth.com/", location:"Remote", mode:"Remote", pay:"Competitive hourly + benefits", commute:"Remote", repvue:"", summary:"Remote customer service for behavioral health division. Monday-Friday schedule. Healthcare is stable, CVS/Aetna is a major employer with benefits from day one. No weekends.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Mon-Fri 11am-7:30pm EST. No weekends. Stable healthcare employer with immediate benefits." },
   { id:37, track:"WFH Now", company:"Concentrix", role:"Customer Service / Tech Support -- Tech Products (Remote)", url:"https://jobs.concentrix.com/job-search/", location:"Remote (MI eligible)", mode:"Remote", pay:"~$16-$20/hr", commute:"Remote", repvue:"", summary:"Tech product support from home -- troubleshoot and assist customers with technology products via phone and chat. Equipment provided, paid training.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Tech-focused version of Concentrix role. Apply to multiple Concentrix listings to increase odds." },
   { id:43, track:"WFH Now", company:"FinTech CRM (Series B)", role:"Remote SDR", url:"https://www.ziprecruiter.com/Jobs/Remote-Sdr", location:"Remote (US)", mode:"Remote", pay:"$50K base / $85K OTE + benefits + 401(k)", commute:"Remote", repvue:"", summary:"Series B fintech CRM for financial advisors. 100+ employees, remote-first. Inbound lead handling + outbound prospecting. Financial services product knowledge is a major plus.", dateApplied:"", followUp:"", status:"Watchlist", notes:"Fintech CRM. Your mortgage/financial services background is a direct match. Apply via ZipRecruiter." },
   { id:44, track:"WFH Now", company:"Interplay Learning", role:"Sales Development Representative", url:"https://www.interplaylearning.com/careers", location:"Remote (US)", mode:"Remote", pay:"$80K-$90K OTE (base + uncapped commission)", commute:"Remote", repvue:"", summary:"VR/3D simulation platform for skilled trades training (HVAC, plumbing, electrical). B2B SaaS selling to workforce development buyers. Austin-based, 100% remote eligible.", dateApplied:"", followUp:"", status:"Watchlist", notes:"EdTech/workforce SaaS. $80-90K OTE is strong. Your consultative selling approach maps well." },
@@ -199,6 +191,54 @@ export default function App() {
   const [editingNotes, setEditingNotes] = useState(null);
   const [notesVal, setNotesVal] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showSync, setShowSync] = useState(false);
+  const [importMsg, setImportMsg] = useState("");
+
+  const exportJobs = () => {
+    const data = JSON.stringify(jobs, null, 2);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `job-tracker-export-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(jobs));
+      setImportMsg("Copied to clipboard! Paste this into Claude chat.");
+      setTimeout(() => setImportMsg(""), 3000);
+    } catch {
+      setImportMsg("Copy failed. Use Export instead.");
+      setTimeout(() => setImportMsg(""), 3000);
+    }
+  };
+
+  const importJobs = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async (ev) => {
+      try {
+        const imported = JSON.parse(ev.target.result);
+        if (Array.isArray(imported) && imported.length > 0) {
+          await save(imported);
+          setImportMsg(`Imported ${imported.length} roles successfully.`);
+          setTimeout(() => setImportMsg(""), 3000);
+        } else {
+          setImportMsg("Invalid file format.");
+          setTimeout(() => setImportMsg(""), 3000);
+        }
+      } catch {
+        setImportMsg("Error reading file.");
+        setTimeout(() => setImportMsg(""), 3000);
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  };
 
   useEffect(() => {
     (async () => {
@@ -225,7 +265,12 @@ export default function App() {
     setForm(null);
   };
 
-  const deleteJob = async (id) => { await save(jobs.filter(j=>j.id!==id)); if(aiPanel?.id===id)setAiPanel(null); };
+  const deleteJob = async (id) => {
+    const scrollY = window.scrollY;
+    await save(jobs.filter(j=>j.id!==id));
+    if(aiPanel?.id===id) setAiPanel(null);
+    requestAnimationFrame(() => window.scrollTo(0, scrollY));
+  };
   const updateStatus = async (id, status) => save(jobs.map(j=>j.id===id?{...j,status}:j));
   const saveNotes = async (id) => { await save(jobs.map(j=>j.id===id?{...j,notes:notesVal}:j)); setEditingNotes(null); };
 
@@ -290,12 +335,52 @@ export default function App() {
             <h1 style={{ margin:0, fontSize:24, fontWeight:800, color:"#1a2744", letterSpacing:"-0.03em" }}>Job Search Tracker</h1>
             <p style={{ margin:"4px 0 0", fontSize:13, color:"#9CA3AF" }}>{jobs.length} roles · April 2026</p>
           </div>
-          <button onClick={()=>openForm(null)} style={{
-            fontSize:14, padding:"10px 22px", cursor:"pointer", borderRadius:12, fontWeight:700,
-            background:"#1a2744", color:"#fff", border:"none", fontFamily:"inherit",
-            boxShadow:"0 2px 8px rgba(26,39,68,0.2)",
-          }}>+ Add Role</button>
+          <div style={{ display:"flex", gap:8, flexShrink:0 }}>
+            <button onClick={()=>setShowSync(!showSync)} style={{
+              fontSize:13, padding:"10px 16px", cursor:"pointer", borderRadius:12, fontWeight:600,
+              background:showSync?"#2c5f8a":"rgba(255,255,255,0.75)", color:showSync?"#fff":"#1a2744",
+              border:"1px solid rgba(130,130,160,0.18)", fontFamily:"inherit",
+              transition:"all 0.15s ease",
+            }}>Sync</button>
+            <button onClick={()=>openForm(null)} style={{
+              fontSize:14, padding:"10px 22px", cursor:"pointer", borderRadius:12, fontWeight:700,
+              background:"#1a2744", color:"#fff", border:"none", fontFamily:"inherit",
+              boxShadow:"0 2px 8px rgba(26,39,68,0.2)",
+            }}>+ Add Role</button>
+          </div>
         </div>
+
+        {showSync && (
+          <div style={{
+            background:"rgba(255,255,255,0.8)", backdropFilter:"blur(16px)",
+            border:"1px solid rgba(130,130,160,0.15)", borderRadius:16,
+            padding:"20px 24px", marginBottom:20,
+            boxShadow:"0 2px 12px rgba(0,0,0,0.04)",
+          }}>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
+              <div>
+                <h3 style={{ margin:0, fontSize:15, fontWeight:700, color:"#1a2744" }}>Sync with Claude</h3>
+                <p style={{ margin:"4px 0 0", fontSize:12, color:"#9CA3AF" }}>Export your current tracker state so Claude can read your latest changes.</p>
+              </div>
+            </div>
+            <div style={{ display:"flex", gap:8, flexWrap:"wrap", alignItems:"center" }}>
+              <Btn onClick={copyToClipboard} style={{ background:"#1a2744", color:"#fff", border:"none", padding:"8px 16px" }}>Copy to Clipboard</Btn>
+              <Btn onClick={exportJobs}>Export JSON</Btn>
+              <label style={{
+                fontSize:12, padding:"8px 16px", cursor:"pointer", borderRadius:8,
+                border:"1px solid rgba(130,130,160,0.18)", background:"rgba(255,255,255,0.75)",
+                color:"#1a2744", fontWeight:500, display:"inline-block",
+              }}>
+                Import JSON
+                <input type="file" accept=".json" onChange={importJobs} style={{ display:"none" }} />
+              </label>
+              {importMsg && <span style={{ fontSize:12, color:"#065F46", fontWeight:600 }}>{importMsg}</span>}
+            </div>
+            <p style={{ margin:"12px 0 0", fontSize:11, color:"#9CA3AF", lineHeight:1.5 }}>
+              <strong>How it works:</strong> Click "Copy to Clipboard" then paste into Claude chat. Claude will see exactly which roles you have, their statuses, and notes. When Claude gives you an updated file, use "Import JSON" to load it back.
+            </p>
+          </div>
+        )}
 
         <input type="text" placeholder="Search companies, roles, locations..." value={searchQuery} onChange={e=>setSearchQuery(e.target.value)}
           style={{ ...IS(), background:"rgba(255,255,255,0.65)", backdropFilter:"blur(12px)", marginBottom:20 }} />
